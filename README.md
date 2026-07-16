@@ -19,7 +19,7 @@ The repository uses processed pathway-abundance matrices rather than raw sequenc
 
 Version 1.0.0 is archived at Zenodo: https://doi.org/10.5281/zenodo.21388009
 
-Version 1.0.1 synchronizes the reproducibility outputs with the manuscript tables and figure files.
+Version 1.0.1 synchronizes the reproducibility outputs with the manuscript tables and figure files: https://doi.org/10.5281/zenodo.21392599
 
 ## Reproduce the analysis
 
