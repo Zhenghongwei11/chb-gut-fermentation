@@ -121,7 +121,7 @@ def feature_to_id(feature: str) -> str:
 
 
 def draw_panel_label(ax, label: str) -> None:
-    ax.text(-0.12, 1.05, label, transform=ax.transAxes, fontsize=12, fontweight="bold", va="top")
+    ax.text(-0.10, 1.12, label, transform=ax.transAxes, fontsize=12, fontweight="bold", va="bottom")
 
 
 def build_figure_1() -> None:
@@ -266,7 +266,7 @@ def build_supplementary_figure_1() -> None:
         ax.axvline(0, color="#9ca3af", lw=1)
         ax.set_yticks(y, labels)
         ax.set_xlabel("S minus M mean difference")
-        ax.set_title(title, fontsize=11)
+        ax.set_title(title, fontsize=11, pad=14)
     draw_panel_label(axes[0], "A")
     draw_panel_label(axes[1], "B")
     col = "delta_mean_logratio_S_minus_M"
@@ -275,7 +275,7 @@ def build_supplementary_figure_1() -> None:
     axes[2].axvline(rand[col].astype(float).median(), color="#334155", lw=1.5, ls="--", label="Matched-set median")
     axes[2].set_xlabel("Matched-set S minus M difference")
     axes[2].set_ylabel("Count")
-    axes[2].set_title(f"Matched pathway sets (absolute empirical P={fmt_p(rand_emp['empirical_p_abs_delta'])})", fontsize=11)
+    axes[2].set_title(f"Matched pathway sets (absolute empirical P={fmt_p(rand_emp['empirical_p_abs_delta'])})", fontsize=11, pad=14)
     axes[2].legend(frameon=False, fontsize=9)
     draw_panel_label(axes[2], "C")
     fig.tight_layout()

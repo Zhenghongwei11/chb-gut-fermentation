@@ -23,6 +23,8 @@ Version 1.0.1 synchronizes the reproducibility outputs with the manuscript table
 
 Version 1.0.2 synchronizes the submission-facing figure layout and supplementary workbook labels with the reproducibility script outputs: https://doi.org/10.5281/zenodo.21394167
 
+Version 1.0.3 refines figure-label spacing and synchronizes the final submission-facing figure outputs with the reproducibility scripts.
+
 ## Reproduce the analysis
 
 Install Python dependencies:
