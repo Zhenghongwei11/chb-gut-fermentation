@@ -21,7 +21,7 @@ Version 1.0.0 is archived at Zenodo: https://doi.org/10.5281/zenodo.21388009
 
 Version 1.0.1 synchronizes the reproducibility outputs with the manuscript tables and figure files: https://doi.org/10.5281/zenodo.21392599
 
-Version 1.0.2 synchronizes the submission-facing figure layout and supplementary workbook labels with the reproducibility script outputs.
+Version 1.0.2 synchronizes the submission-facing figure layout and supplementary workbook labels with the reproducibility script outputs: https://doi.org/10.5281/zenodo.21394167
 
 ## Reproduce the analysis
 
