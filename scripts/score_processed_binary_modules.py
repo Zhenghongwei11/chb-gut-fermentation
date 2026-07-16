@@ -501,7 +501,7 @@ def direction_consistency(members: pd.DataFrame) -> pd.DataFrame:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Score locked modules in a processed public pathway matrix.")
+    parser = argparse.ArgumentParser(description="Score finalised modules in a processed public pathway matrix.")
     parser.add_argument("--cohort", required=True)
     parser.add_argument("--pathway", type=Path, required=True)
     parser.add_argument("--metadata", type=Path, required=True)
@@ -589,7 +589,7 @@ def main() -> int:
     stats.to_csv(args.out_dir / "module_binary_contrasts.tsv", sep="\t", index=False)
     members.to_csv(args.out_dir / "pathway_member_binary_stats.tsv", sep="\t", index=False)
     loo.to_csv(args.out_dir / "leave_one_pathway_out.tsv", sep="\t", index=False)
-    mapping.to_csv(args.out_dir / "locked_module_feature_mapping.tsv", sep="\t", index=False)
+    mapping.to_csv(args.out_dir / "module_feature_mapping.tsv", sep="\t", index=False)
     direction.to_csv(args.out_dir / "pathway_direction_consistency.tsv", sep="\t", index=False)
     random_modules.to_csv(args.out_dir / "random_module_distribution.tsv", sep="\t", index=False)
     random_summary.to_csv(args.out_dir / "random_module_empirical.tsv", sep="\t", index=False)

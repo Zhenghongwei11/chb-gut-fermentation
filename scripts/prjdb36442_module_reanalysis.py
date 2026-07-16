@@ -455,7 +455,7 @@ def random_distribution_summary(random_rows: list[dict[str, str]], true_stats: l
     ]
 
 
-def negative_control_rows(stat_rows: list[dict[str, str]]) -> list[dict[str, str]]:
+def comparison_module_rows(stat_rows: list[dict[str, str]]) -> list[dict[str, str]]:
     controls = {
         "bile_acids": "non-SCFA bile-acid transformation comparator",
         "lps_lipidA": "non-fermentation cell-envelope/endotoxin comparator",
@@ -466,14 +466,14 @@ def negative_control_rows(stat_rows: list[dict[str, str]]) -> list[dict[str, str
         if row["module"] not in controls:
             continue
         out = dict(row)
-        out["negative_control_rationale"] = controls[row["module"]]
+        out["comparison_module_rationale"] = controls[row["module"]]
         rows.append(out)
     return rows
 
 
-def negative_control_decisions(stat_rows: list[dict[str, str]]) -> list[dict[str, str]]:
+def comparison_module_decisions(stat_rows: list[dict[str, str]]) -> list[dict[str, str]]:
     primary = next((row for row in stat_rows if row["module"] == "overall_fermentation"), None)
-    controls = negative_control_rows(stat_rows)
+    controls = comparison_module_rows(stat_rows)
     if not primary or not controls:
         return []
 
@@ -496,7 +496,7 @@ def negative_control_decisions(stat_rows: list[dict[str, str]]) -> list[dict[str
         comparable_or_stronger_loo = loo >= primary_loo
         concerning = same_direction and equal_or_larger_abs and comparable_or_smaller_p and comparable_or_stronger_loo
         if concerning:
-            interpretation = "concerning_negative_control"
+            interpretation = "stronger_than_primary_on_all_descriptive_checks"
         elif same_direction and equal_or_larger_abs:
             interpretation = "large_but_not_statistically_or_stability_comparable"
         elif same_direction:
@@ -506,7 +506,7 @@ def negative_control_decisions(stat_rows: list[dict[str, str]]) -> list[dict[str
         rows.append(
             {
                 "module": control["module"],
-                "negative_control_rationale": control["negative_control_rationale"],
+                "comparison_module_rationale": control["comparison_module_rationale"],
                 "delta_mean_logratio_S_minus_M": control["delta_mean_logratio_S_minus_M"],
                 "p_exact": control["p_exact"],
                 "loo_fraction": f"{loo:.12g}",
@@ -532,7 +532,7 @@ def write_tsv(path: Path, rows: list[dict[str, str]]) -> None:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Locked-plan PRJDB36442 module reanalysis.")
+    parser = argparse.ArgumentParser(description="PRJDB36442 finalised module reanalysis.")
     parser.add_argument(
         "--merged-pathabundance",
         type=Path,
@@ -582,10 +582,10 @@ def main() -> int:
     write_tsv(prefix.with_name(f"{args.membership}_random_module_empirical.tsv"), summary_rows)
     distribution_rows = random_distribution_summary(random_rows, stat_rows)
     write_tsv(prefix.with_name(f"{args.membership}_random_module_distribution.tsv"), distribution_rows)
-    control_rows = negative_control_rows(stat_rows)
-    write_tsv(prefix.with_name(f"{args.membership}_negative_controls.tsv"), control_rows)
-    control_decision_rows = negative_control_decisions(stat_rows)
-    write_tsv(prefix.with_name(f"{args.membership}_negative_control_decisions.tsv"), control_decision_rows)
+    control_rows = comparison_module_rows(stat_rows)
+    write_tsv(prefix.with_name(f"{args.membership}_mechanistic_comparison_modules.tsv"), control_rows)
+    control_decision_rows = comparison_module_decisions(stat_rows)
+    write_tsv(prefix.with_name(f"{args.membership}_mechanistic_comparison_summary.tsv"), control_decision_rows)
     print(f"[ok] wrote {args.out_dir}")
     return 0
 

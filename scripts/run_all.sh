@@ -4,6 +4,8 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
+rm -rf outputs/results outputs/figures outputs/tables
+
 mkdir -p outputs/results/prjdb36442/conservative \
   outputs/results/prjdb36442/expanded \
   outputs/results/prjdb36442/sensitivity \

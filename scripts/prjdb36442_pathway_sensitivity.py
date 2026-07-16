@@ -207,7 +207,7 @@ def direction_summary(member_df: pd.DataFrame) -> pd.DataFrame:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="PRJDB36442 pathway-level sensitivity for locked modules.")
+    parser = argparse.ArgumentParser(description="PRJDB36442 pathway-level sensitivity for finalised modules.")
     parser.add_argument("--merged-pathabundance", type=Path, default=Path("results/processed/PRJDB36442_humann/merged_pathabundance.tsv.gz"))
     parser.add_argument("--manifest", type=Path, default=Path("metadata/cohorts/PRJDB36442_manifest.tsv"))
     parser.add_argument("--module-definitions", type=Path, default=Path("analysis_plan/module_definitions.tsv"))
