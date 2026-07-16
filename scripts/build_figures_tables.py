@@ -158,14 +158,14 @@ def build_figure_2() -> None:
         ("Acetate/lactate overlap", row(stats, "scfa_acetate")),
         ("Butyrate", row(stats, "scfa_butyrate")),
     ]
-    fig, axes = plt.subplots(1, 2, figsize=(11.3, 4.7), gridspec_kw={"width_ratios": [1.0, 1.25]})
+    fig, axes = plt.subplots(1, 2, figsize=(11.3, 4.5), gridspec_kw={"width_ratios": [1.0, 1.25]})
     vals = [plot_scores.loc[plot_scores["group"] == g, "log_ratio_score"].to_numpy() for g in ["M", "S"]]
     axes[0].boxplot(vals, tick_labels=["M\nn=9", "S\nn=11"], patch_artist=True, boxprops=dict(facecolor="#dbeafe"), medianprops=dict(color="#111827", lw=1.5))
     for i, arr in enumerate(vals, start=1):
-        axes[0].scatter([i] * len(arr), arr, s=28, color="#245766", edgecolor="white", zorder=3)
-    axes[0].set_title("Selected fermentation composite score")
-    axes[0].set_ylabel("log-ratio module score")
-    axes[0].axhline(0, color="#cbd5e1", lw=0.8)
+        axes[0].scatter([i] * len(arr), arr, s=30, color="#245766", edgecolor="white", zorder=3)
+    axes[0].set_ylim(-5.55, -3.95)
+    axes[0].set_title("Selected composite score", fontsize=11)
+    axes[0].set_ylabel("log-ratio pathway score")
     draw_panel_label(axes[0], "A")
     labels = [r[0] for r in rows]
     deltas = [prj_delta(r[1]) for r in rows]
@@ -176,11 +176,10 @@ def build_figure_2() -> None:
     axes[1].axvline(0, color="#9ca3af", lw=1)
     axes[1].set_yticks(y, labels)
     axes[1].set_xlabel("S minus M mean difference (95% CI)")
-    axes[1].set_title("Discovery-cohort effect estimates")
+    axes[1].set_title("Effect estimates", fontsize=11)
     for yy, high, (_, stat) in zip(y, highs, rows):
-        axes[1].text(high + 0.05, yy, f"nominal P={fmt_p(prj_p(stat))}", va="center", fontsize=9)
+        axes[1].text(high + 0.05, yy, f"P={fmt_p(prj_p(stat))}", va="center", fontsize=9)
     draw_panel_label(axes[1], "B")
-    fig.suptitle("CHB discovery analysis", y=1.02, fontsize=14, fontweight="bold")
     fig.tight_layout()
     save_figure(fig, "Figure2_CHB_discovery_effects")
     plt.close(fig)
@@ -196,13 +195,13 @@ def build_figure_3() -> None:
         ("Butyrate", row(stats, "scfa_butyrate", "conservative")),
         ("Selected composite\nexpanded definition", row(stats, "overall_fermentation", "expanded")),
     ]
-    fig, axes = plt.subplots(1, 2, figsize=(11.6, 4.8), gridspec_kw={"width_ratios": [1.1, 1.1]})
+    fig, axes = plt.subplots(1, 2, figsize=(11.6, 4.6), gridspec_kw={"width_ratios": [1.1, 1.1]})
     vals = [plot_scores.loc[plot_scores["group"] == g, "module_score"].to_numpy() for g in ["F0_F2", "F3_F4"]]
     axes[0].boxplot(vals, tick_labels=["F0-F2\nn=72", "F3-F4\nn=14"], patch_artist=True, boxprops=dict(facecolor="#d1fae5"), medianprops=dict(color="#111827", lw=1.5))
     for i, arr in enumerate(vals, start=1):
         axes[0].scatter([i] * len(arr), arr, s=20, alpha=0.7, color="#2c8f83", edgecolor="white", linewidth=0.3, zorder=3)
-    axes[0].set_ylabel("log-ratio module score")
-    axes[0].set_title("Selected fermentation composite")
+    axes[0].set_ylabel("log-ratio pathway score")
+    axes[0].set_title("Selected composite score", fontsize=11)
     draw_panel_label(axes[0], "A")
     labels = [r[0] for r in rows]
     rows_for_plot = [r[1] for r in rows]
@@ -214,11 +213,10 @@ def build_figure_3() -> None:
     axes[1].axvline(0, color="#9ca3af", lw=1)
     axes[1].set_yticks(y, labels)
     axes[1].set_xlabel("F3-F4 minus F0-F2 mean difference (95% CI)")
-    axes[1].set_title("Finalised modules and expanded sensitivity")
+    axes[1].set_title("Pathway-set sensitivity", fontsize=11)
     for yy, high, stat in zip(y, highs, rows_for_plot):
         axes[1].text(high + 0.04, yy, f"P={fmt_p(ext_p(stat))}", va="center", fontsize=9)
     draw_panel_label(axes[1], "B")
-    fig.suptitle("Unadjusted NAFLD fibrosis comparison and pathway sensitivity", y=1.02, fontsize=14, fontweight="bold")
     fig.tight_layout()
     save_figure(fig, "Figure3_NAFLD_fibrosis_pathway_scores")
     plt.close(fig)
@@ -233,7 +231,7 @@ def build_figure_4() -> None:
         ("NAFLD fibrosis cohort\nF3-F4 vs F0-F2", ext_delta(loomba), float(loomba["bootstrap95_ci_low"]), float(loomba["bootstrap95_ci_high"]), ext_p(loomba)),
         ("Cirrhosis context cohort\ncirrhosis vs healthy", ext_delta(qin), float(qin["bootstrap95_ci_low"]), float(qin["bootstrap95_ci_high"]), ext_p(qin)),
     ]
-    fig, ax = plt.subplots(figsize=(9.2, 4.8))
+    fig, ax = plt.subplots(figsize=(9.2, 4.5))
     y = list(range(len(rows)))[::-1]
     for yy, item, color in zip(y, rows, ["#245766", "#2c8f83", "#6b7a8f"]):
         _, d, low, high, pval = item
@@ -242,8 +240,7 @@ def build_figure_4() -> None:
     ax.axvline(0, color="#9ca3af", lw=1)
     ax.set_yticks(y, [r[0] for r in rows])
     ax.set_xlabel("Test minus reference mean difference in selected composite score (95% CI)")
-    ax.set_title("Cohort-specific selected-composite contrasts", fontsize=14, fontweight="bold")
-    ax.text(0.02, -0.28, "Cohort-specific estimates; different pathway universes; not pooled.", transform=ax.transAxes, fontsize=9.2, color="#4b5563")
+    ax.text(0.02, -0.26, "Cohort-specific estimates; different pathway universes; not pooled.", transform=ax.transAxes, fontsize=9.2, color="#4b5563")
     fig.tight_layout()
     save_figure(fig, "Figure4_Cohort_specific_pathway_score_contrasts")
     plt.close(fig)
@@ -255,28 +252,32 @@ def build_supplementary_figure_1() -> None:
     rand_emp = row(read_tsv(RES / "prjdb36442" / "conservative" / "conservative_random_module_empirical.tsv"), "overall_fermentation")
     modules = ["overall_fermentation", "bile_acids", "lps_lipidA", "tryptophan_indole"]
     rows = [(MODULE_LABELS[m], row(stats, m)) for m in modules]
-    fig, axes = plt.subplots(1, 2, figsize=(11.4, 4.7), gridspec_kw={"width_ratios": [1.1, 1.0]})
-    deltas = [prj_delta(r[1]) for r in rows]
-    lows = [float(r[1]["bootstrap95_ci_low"]) for r in rows]
-    highs = [float(r[1]["bootstrap95_ci_high"]) for r in rows]
-    y = list(range(len(rows)))[::-1]
-    for yy, d, low, high, color in zip(y, deltas, lows, highs, ["#245766", "#7c8798", "#7c8798", "#7c8798"]):
-        axes[0].errorbar(d, yy, xerr=[[d - low], [high - d]], fmt="o", color=color, ecolor=color, capsize=4)
-    axes[0].axvline(0, color="#9ca3af", lw=1)
-    axes[0].set_yticks(y, [r[0] for r in rows])
-    axes[0].set_xlabel("S minus M mean difference (95% CI)")
-    axes[0].set_title("Exploratory mechanistic comparison modules", fontsize=11)
+    fig, axes = plt.subplots(1, 3, figsize=(13.2, 4.4), gridspec_kw={"width_ratios": [1.0, 1.0, 1.35]})
+    narrow = rows[:2] + [rows[3]]
+    wide = [rows[2]]
+    for ax, plot_rows, title in [(axes[0], narrow, "Selected and comparison modules"), (axes[1], wide, "LPS/lipid A module")]:
+        labels = [r[0] for r in plot_rows]
+        deltas = [prj_delta(r[1]) for r in plot_rows]
+        lows = [float(r[1]["bootstrap95_ci_low"]) for r in plot_rows]
+        highs = [float(r[1]["bootstrap95_ci_high"]) for r in plot_rows]
+        y = list(range(len(plot_rows)))[::-1]
+        for yy, d, low, high, color in zip(y, deltas, lows, highs, ["#245766"] + ["#7c8798"] * 3):
+            ax.errorbar(d, yy, xerr=[[d - low], [high - d]], fmt="o", color=color, ecolor=color, capsize=4)
+        ax.axvline(0, color="#9ca3af", lw=1)
+        ax.set_yticks(y, labels)
+        ax.set_xlabel("S minus M mean difference")
+        ax.set_title(title, fontsize=11)
     draw_panel_label(axes[0], "A")
-    col = "delta_mean_logratio_S_minus_M"
-    axes[1].hist(rand[col].astype(float), bins=35, color="#d8dee9", edgecolor="white")
-    axes[1].axvline(prj_delta(row(stats, "overall_fermentation")), color="#c2410c", lw=2, label="Observed selected composite")
-    axes[1].axvline(rand[col].astype(float).median(), color="#334155", lw=1.5, ls="--", label="Random-module median")
-    axes[1].set_xlabel("Random-module S minus M difference")
-    axes[1].set_ylabel("Count")
-    axes[1].set_title(f"Matched random modules\nabsolute empirical P={fmt_p(rand_emp['empirical_p_abs_delta'])}", fontsize=11)
-    axes[1].legend(frameon=False, fontsize=9)
     draw_panel_label(axes[1], "B")
-    fig.suptitle("Comparison of the selected fermentation composite with mechanistic modules and matched pathway sets", y=1.02, fontsize=13.2, fontweight="bold")
+    col = "delta_mean_logratio_S_minus_M"
+    axes[2].hist(rand[col].astype(float), bins=35, color="#d8dee9", edgecolor="white")
+    axes[2].axvline(prj_delta(row(stats, "overall_fermentation")), color="#c2410c", lw=2, label="Observed selected composite")
+    axes[2].axvline(rand[col].astype(float).median(), color="#334155", lw=1.5, ls="--", label="Matched-set median")
+    axes[2].set_xlabel("Matched-set S minus M difference")
+    axes[2].set_ylabel("Count")
+    axes[2].set_title(f"Matched pathway sets (absolute empirical P={fmt_p(rand_emp['empirical_p_abs_delta'])})", fontsize=11)
+    axes[2].legend(frameon=False, fontsize=9)
+    draw_panel_label(axes[2], "C")
     fig.tight_layout()
     save_figure(fig, "Supplementary_Figure_S1_mechanistic_and_matched_pathway_comparisons")
     plt.close(fig)
@@ -927,33 +928,33 @@ def unmapped_unintegrated_submission() -> pd.DataFrame:
 def write_workbook() -> None:
     workbook = TAB / "supplementary_tables.xlsx"
     with pd.ExcelWriter(workbook, engine="openpyxl") as writer:
-        supplementary_index().to_excel(writer, sheet_name="Table index", index=False)
-        cohort_screening().to_excel(writer, sheet_name="Supp 1 Cohort screening", index=False)
-        build_module_definition_sheet().to_excel(writer, sheet_name="Supp 2 Module definitions", index=False)
-        build_member_availability().to_excel(writer, sheet_name="Supp 3 Member availability", index=False)
-        build_formula_sheet().to_excel(writer, sheet_name="Supp 4 Scoring formula", index=False)
-        build_stat_settings().to_excel(writer, sheet_name="Supp 5 Statistical settings", index=False)
-        build_score_sensitivity().to_excel(writer, sheet_name="Supp 6 Score sensitivity", index=False)
-        build_loomba_covariates().to_excel(writer, sheet_name="Supp 7 NAFLD covariates", index=False)
-        endpoint_sheet().to_excel(writer, sheet_name="Supp 8 Endpoint hierarchy", index=False)
-        clean_module_effects(read_tsv(RES / "prjdb36442" / "conservative" / "conservative_module_stats.tsv"), "CHB discovery cohort").to_excel(writer, sheet_name="Supp 9 CHB effects", index=False)
-        clean_module_effects(read_tsv(RES / "prjdb36442" / "expanded" / "expanded_module_stats.tsv"), "CHB discovery cohort").to_excel(writer, sheet_name="Supp 10 CHB expanded", index=False)
-        read_tsv(RES / "prjdb36442" / "sensitivity" / "pathway_member_stats.tsv").query("membership == 'conservative'").to_excel(writer, sheet_name="Supp 11 CHB pathway members", index=False)
-        read_tsv(RES / "prjdb36442" / "sensitivity" / "leave_one_pathway_out.tsv").query("membership == 'conservative' and module == 'overall_fermentation'").to_excel(writer, sheet_name="Supp 12 CHB leave-one-out", index=False)
-        read_tsv(RES / "prjdb36442" / "conservative" / "conservative_random_module_empirical.tsv").to_excel(writer, sheet_name="Supp 13 CHB matched sets", index=False)
-        clean_module_effects(read_tsv(RES / "loombar2017" / "module_binary_contrasts.tsv"), "NAFLD fibrosis cohort").to_excel(writer, sheet_name="Supp 14 NAFLD effects", index=False)
-        read_tsv(RES / "loombar2017" / "pathway_member_binary_stats.tsv").to_excel(writer, sheet_name="Supp 15 NAFLD pathways", index=False)
-        read_tsv(RES / "loombar2017" / "leave_one_pathway_out.tsv").to_excel(writer, sheet_name="Supp 16 NAFLD leave-one-out", index=False)
-        read_tsv(RES / "loombar2017" / "random_module_empirical.tsv").to_excel(writer, sheet_name="Supp 17 NAFLD matched sets", index=False)
-        clean_module_effects(read_tsv(RES / "qinn2014" / "module_binary_contrasts.tsv"), "Qin et al. cirrhosis cohort").to_excel(writer, sheet_name="Supp 18 Cirrhosis effects", index=False)
-        read_tsv(RES / "qinn2014" / "pathway_member_binary_stats.tsv").to_excel(writer, sheet_name="Supp 19 Cirrhosis pathways", index=False)
-        checklist_rows("STORMS").to_excel(writer, sheet_name="Supp 20 STORMS checklist", index=False)
-        checklist_rows("STROBE").to_excel(writer, sheet_name="Supp 21 STROBE checklist", index=False)
-        loomba_technical_sensitivity().to_excel(writer, sheet_name="Supp 22 NAFLD technical", index=False)
-        prjdb_pathway_detection().to_excel(writer, sheet_name="Supp 23 CHB pathway detection", index=False)
-        logratio_sensitivity().to_excel(writer, sheet_name="Supp 24 Log-ratio sensitivity", index=False)
-        matched_set_diagnostics().to_excel(writer, sheet_name="Supp 25 Matched set diagnostics", index=False)
-        unmapped_unintegrated_submission().to_excel(writer, sheet_name="Supp 26 Unmapped fractions", index=False)
+        supplementary_index().to_excel(writer, sheet_name="Index", index=False)
+        cohort_screening().to_excel(writer, sheet_name="Table S1 Cohort screening", index=False)
+        build_module_definition_sheet().to_excel(writer, sheet_name="Table S2 Module definitions", index=False)
+        build_member_availability().to_excel(writer, sheet_name="Table S3 Pathway availability", index=False)
+        build_formula_sheet().to_excel(writer, sheet_name="Table S4 Scoring formula", index=False)
+        build_stat_settings().to_excel(writer, sheet_name="Table S5 Statistical methods", index=False)
+        build_score_sensitivity().to_excel(writer, sheet_name="Table S6 Score sensitivity", index=False)
+        build_loomba_covariates().to_excel(writer, sheet_name="Table S7 NAFLD metadata", index=False)
+        endpoint_sheet().to_excel(writer, sheet_name="Table S8 Analysis hierarchy", index=False)
+        clean_module_effects(read_tsv(RES / "prjdb36442" / "conservative" / "conservative_module_stats.tsv"), "CHB discovery cohort").to_excel(writer, sheet_name="Table S9 CHB effects", index=False)
+        clean_module_effects(read_tsv(RES / "prjdb36442" / "expanded" / "expanded_module_stats.tsv"), "CHB discovery cohort").to_excel(writer, sheet_name="Table S10 CHB expanded", index=False)
+        read_tsv(RES / "prjdb36442" / "sensitivity" / "pathway_member_stats.tsv").query("membership == 'conservative'").to_excel(writer, sheet_name="Table S11 CHB pathways", index=False)
+        read_tsv(RES / "prjdb36442" / "sensitivity" / "leave_one_pathway_out.tsv").query("membership == 'conservative' and module == 'overall_fermentation'").to_excel(writer, sheet_name="Table S12 CHB leave-one-out", index=False)
+        read_tsv(RES / "prjdb36442" / "conservative" / "conservative_random_module_empirical.tsv").to_excel(writer, sheet_name="Table S13 CHB matched sets", index=False)
+        clean_module_effects(read_tsv(RES / "loombar2017" / "module_binary_contrasts.tsv"), "NAFLD fibrosis cohort").to_excel(writer, sheet_name="Table S14 NAFLD effects", index=False)
+        read_tsv(RES / "loombar2017" / "pathway_member_binary_stats.tsv").to_excel(writer, sheet_name="Table S15 NAFLD pathways", index=False)
+        read_tsv(RES / "loombar2017" / "leave_one_pathway_out.tsv").to_excel(writer, sheet_name="Table S16 NAFLD leave-one-out", index=False)
+        read_tsv(RES / "loombar2017" / "random_module_empirical.tsv").to_excel(writer, sheet_name="Table S17 NAFLD matched sets", index=False)
+        clean_module_effects(read_tsv(RES / "qinn2014" / "module_binary_contrasts.tsv"), "Qin et al. cirrhosis cohort").to_excel(writer, sheet_name="Table S18 Cirrhosis effects", index=False)
+        read_tsv(RES / "qinn2014" / "pathway_member_binary_stats.tsv").to_excel(writer, sheet_name="Table S19 Cirrhosis pathways", index=False)
+        checklist_rows("STORMS").to_excel(writer, sheet_name="Table S20 STORMS checklist", index=False)
+        checklist_rows("STROBE").to_excel(writer, sheet_name="Table S21 STROBE checklist", index=False)
+        loomba_technical_sensitivity().to_excel(writer, sheet_name="Table S22 NAFLD technical", index=False)
+        prjdb_pathway_detection().to_excel(writer, sheet_name="Table S23 CHB detection", index=False)
+        logratio_sensitivity().to_excel(writer, sheet_name="Table S24 Log-ratio sensitivity", index=False)
+        matched_set_diagnostics().to_excel(writer, sheet_name="Table S25 Matched diagnostics", index=False)
+        unmapped_unintegrated_submission().to_excel(writer, sheet_name="Table S26 Unmapped fractions", index=False)
     from openpyxl import load_workbook
 
     wb = load_workbook(workbook)

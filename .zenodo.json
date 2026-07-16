@@ -2,7 +2,7 @@
   "title": "CHB gut microbial fermentation pathway analysis",
   "upload_type": "software",
   "description": "Code, processed public-data inputs, and derived analysis outputs for a reproducible metagenomic pathway analysis of biopsy-stratified chronic hepatitis B with external public-data comparisons in NAFLD fibrosis and cirrhosis.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "creators": [
     {
       "name": "Zheng, Hongwei",
@@ -25,11 +25,6 @@
   "related_identifiers": [
     {
       "identifier": "10.5281/zenodo.21392599",
-      "relation": "isIdenticalTo",
-      "scheme": "doi"
-    },
-    {
-      "identifier": "10.5281/zenodo.21388009",
       "relation": "isNewVersionOf",
       "scheme": "doi"
     },
