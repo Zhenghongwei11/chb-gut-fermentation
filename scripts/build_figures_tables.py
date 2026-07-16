@@ -565,9 +565,9 @@ def build_stat_settings() -> pd.DataFrame:
             ("Monte Carlo P", "Monte Carlo P values used the correction (b+1)/(m+1)."),
             ("Bootstrap CI", "5,000 bootstrap resamples were drawn within reference and test groups; percentile 2.5% and 97.5% intervals are reported."),
             ("Cliff's delta", "Pairwise group comparisons counted greater-than and less-than pairs; ties contributed zero to the numerator."),
-            ("Multiplicity", "The conservative selected fermentation-composite score was the main discovery analysis. Secondary and exploratory modules are presented with nominal P values, effect sizes, uncertainty intervals, and consistency checks."),
+            ("Multiplicity", "The conservative selected fermentation-composite score was the sole main discovery analysis. Submodules, mechanistic comparison modules, individual pathway checks, and leave-one-pathway-out analyses are exploratory and are presented with nominal P values, effect sizes, uncertainty intervals, and consistency checks; no FDR-controlled confirmatory claim is made for these exploratory outputs."),
             ("Technical and clinical covariates", "Clinical covariates were not available for the CHB discovery cohort. The exported NAFLD fibrosis-cohort metadata did not contain sex, BMI, or diabetes; age_category was fully collinear with fibrosis group and was not adjusted for."),
-            ("Software", "Python 3 with pandas, NumPy, SciPy/permutation routines, and matplotlib for scientific plots; external processed resources were from curatedMetagenomicData pathway_abundance. Document-generation libraries are not part of the statistical analysis."),
+            ("Software and pathway resources", "CHB pathway profiles were generated with HUMAnN v3.9 using ChocoPhlAn nucleotide search, bypassed translated search, and MetaPhlAn index mpa_vJan25_CHOCOPhlAnSGB_202503. External processed pathway_abundance resources were exported with curatedMetagenomicData v3.16.1: 2021-10-14.LoombaR_2017.pathway_abundance and 2021-03-31.QinN_2014.pathway_abundance. Python 3 with pandas, NumPy, SciPy/permutation routines and matplotlib was used for the present statistical analysis and plotting."),
         ],
         columns=["item", "description"],
     )
