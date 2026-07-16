@@ -15,9 +15,11 @@ The analysis asks whether a selected fermentation-related MetaCyc pathway compos
 
 The repository uses processed pathway-abundance matrices rather than raw sequencing reads. This keeps the analysis lightweight and reproducible on a standard computer.
 
-## Archived release
+## Archived releases
 
 Version 1.0.0 is archived at Zenodo: https://doi.org/10.5281/zenodo.21388009
+
+Version 1.0.1 synchronizes the reproducibility outputs with the manuscript tables and figure files.
 
 ## Reproduce the analysis
 
