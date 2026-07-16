@@ -240,7 +240,6 @@ def build_figure_4() -> None:
     ax.axvline(0, color="#9ca3af", lw=1)
     ax.set_yticks(y, [r[0] for r in rows])
     ax.set_xlabel("Test minus reference mean difference in selected composite score (95% CI)")
-    ax.text(0.02, -0.26, "Cohort-specific estimates; different pathway universes; not pooled.", transform=ax.transAxes, fontsize=9.2, color="#4b5563")
     fig.tight_layout()
     save_figure(fig, "Figure4_Cohort_specific_pathway_score_contrasts")
     plt.close(fig)
