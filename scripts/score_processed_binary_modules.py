@@ -20,7 +20,7 @@ def load_modules(path: Path, membership: str) -> dict[str, list[dict[str, str]]]
     definitions = pd.read_csv(path, sep="\t")
     definitions = definitions[
         (definitions["membership"] == membership)
-        & (definitions["lock_status"].isin(["locked", "draft_seed_not_final_locked"]))
+        & (definitions["lock_status"].isin(["finalised", "draft_seed_not_final", "locked", "draft_seed_not_final_locked"]))
     ].copy()
 
     modules: dict[str, list[dict[str, str]]] = {}
@@ -316,7 +316,7 @@ def score_modules(
 
 
 def quantile_bins(metrics: dict[str, dict[str, float]], key: str, n_bins: int) -> dict[str, int]:
-    ordered = sorted(metrics, key=lambda feature: metrics[feature][key])
+    ordered = sorted(metrics, key=lambda feature: (metrics[feature][key], feature))
     return {feature: min(n_bins - 1, int(rank * n_bins / len(ordered))) for rank, feature in enumerate(ordered)}
 
 
@@ -363,7 +363,7 @@ def random_module_calibration(
     target = set(target_ids)
     by_bin: dict[tuple[int, int, int, int], list[str]] = {}
     by_mean_prev: dict[tuple[int, int], list[str]] = {}
-    for pathway in metrics:
+    for pathway in sorted(metrics):
         if pathway in target:
             continue
         full_key = (mean_bins[pathway], prev_bins[pathway], var_bins[pathway], zero_bins[pathway])
@@ -371,7 +371,7 @@ def random_module_calibration(
         by_bin.setdefault(full_key, []).append(pathway)
         by_mean_prev.setdefault(mean_prev_key, []).append(pathway)
 
-    all_pool = [pathway for pathway in metrics if pathway not in target]
+    all_pool = [pathway for pathway in sorted(metrics) if pathway not in target]
     if len(all_pool) < len(target_ids):
         return pd.DataFrame(), pd.DataFrame(), pd.DataFrame()
 

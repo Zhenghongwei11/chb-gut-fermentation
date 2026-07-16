@@ -3,6 +3,9 @@ from __future__ import annotations
 
 import gzip
 import math
+import re
+import zipfile
+from datetime import datetime, timezone
 from pathlib import Path
 
 import matplotlib
@@ -21,6 +24,13 @@ FIG = OUT / "figures"
 TAB = OUT / "tables"
 RES = OUT / "results"
 PSEUDOCOUNT = 1e-9
+FIXED_WORKBOOK_DATETIME = datetime(2026, 7, 16, 0, 0, 0)
+PDF_METADATA = {
+    "Creator": "CHB gut microbial fermentation pathway analysis",
+    "Producer": "Matplotlib",
+    "CreationDate": datetime(2026, 7, 16, tzinfo=timezone.utc),
+    "ModDate": datetime(2026, 7, 16, tzinfo=timezone.utc),
+}
 
 MODULE_LABELS = {
     "overall_fermentation": "Selected fermentation composite",
@@ -68,6 +78,33 @@ def ext_delta(r: pd.Series) -> float:
     return float(r["delta_mean"])
 
 
+def save_figure(fig: plt.Figure, stem: str) -> None:
+    fig.savefig(FIG / f"{stem}.png", dpi=300, bbox_inches="tight", facecolor="white")
+    fig.savefig(FIG / f"{stem}.pdf", bbox_inches="tight", facecolor="white", metadata=PDF_METADATA)
+
+
+def normalize_xlsx_zip(path: Path) -> None:
+    tmp = path.with_suffix(".tmp.xlsx")
+    fixed_time = (2026, 7, 16, 0, 0, 0)
+    with zipfile.ZipFile(path, "r") as zin, zipfile.ZipFile(tmp, "w", compression=zipfile.ZIP_DEFLATED) as zout:
+        for name in sorted(zin.namelist()):
+            src = zin.getinfo(name)
+            dst = zipfile.ZipInfo(filename=name, date_time=fixed_time)
+            dst.compress_type = zipfile.ZIP_DEFLATED
+            dst.external_attr = src.external_attr
+            data = zin.read(name)
+            if name == "docProps/core.xml":
+                data = re.sub(
+                    rb"<dcterms:modified[^>]*>[^<]+</dcterms:modified>",
+                    b'<dcterms:modified xmlns:dcterms="http://purl.org/dc/terms/" '
+                    b'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
+                    b'xsi:type="dcterms:W3CDTF">2026-07-16T00:00:00Z</dcterms:modified>',
+                    data,
+                )
+            zout.writestr(dst, data)
+    tmp.replace(path)
+
+
 def prj_p(r: pd.Series) -> float:
     return float(r["p_exact"])
 
@@ -105,8 +142,7 @@ def build_figure_1() -> None:
         ax.text(x + w / 2, y + h / 2, text, ha="center", va="center", fontsize=10.1, linespacing=1.25, color=tcolor)
     for x in [0.19, 0.50, 0.81]:
         ax.annotate("", xy=(x, 0.44), xytext=(x, 0.59), arrowprops=dict(arrowstyle="->", lw=1.2, color="#263238"))
-    fig.savefig(FIG / "Figure_1.png", dpi=300, bbox_inches="tight", facecolor="white")
-    fig.savefig(FIG / "Figure_1.pdf", bbox_inches="tight", facecolor="white")
+    save_figure(fig, "Figure_1")
     plt.close(fig)
 
 
@@ -143,8 +179,7 @@ def build_figure_2() -> None:
     draw_panel_label(axes[1], "B")
     fig.suptitle("CHB discovery analysis", y=1.02, fontsize=14, fontweight="bold")
     fig.tight_layout()
-    fig.savefig(FIG / "Figure_2.png", dpi=300, bbox_inches="tight", facecolor="white")
-    fig.savefig(FIG / "Figure_2.pdf", bbox_inches="tight", facecolor="white")
+    save_figure(fig, "Figure_2")
     plt.close(fig)
 
 
@@ -182,8 +217,7 @@ def build_figure_3() -> None:
     draw_panel_label(axes[1], "B")
     fig.suptitle("NAFLD biopsy-defined fibrosis comparison and pathway sensitivity", y=1.02, fontsize=14, fontweight="bold")
     fig.tight_layout()
-    fig.savefig(FIG / "Figure_3.png", dpi=300, bbox_inches="tight", facecolor="white")
-    fig.savefig(FIG / "Figure_3.pdf", bbox_inches="tight", facecolor="white")
+    save_figure(fig, "Figure_3")
     plt.close(fig)
 
 
@@ -208,8 +242,7 @@ def build_figure_4() -> None:
     ax.set_title("Selected fermentation-composite effects across analysed cohorts", fontsize=14, fontweight="bold")
     ax.text(0.02, -0.28, "Cohort-specific estimates; different pathway universes; not pooled.", transform=ax.transAxes, fontsize=9.2, color="#4b5563")
     fig.tight_layout()
-    fig.savefig(FIG / "Figure_4.png", dpi=300, bbox_inches="tight", facecolor="white")
-    fig.savefig(FIG / "Figure_4.pdf", bbox_inches="tight", facecolor="white")
+    save_figure(fig, "Figure_4")
     plt.close(fig)
 
 
@@ -242,8 +275,7 @@ def build_supplementary_figure_1() -> None:
     draw_panel_label(axes[1], "B")
     fig.suptitle("Calibration of the CHB discovery selected fermentation-composite result", y=1.02, fontsize=14, fontweight="bold")
     fig.tight_layout()
-    fig.savefig(FIG / "Supplementary_Figure_1.png", dpi=300, bbox_inches="tight", facecolor="white")
-    fig.savefig(FIG / "Supplementary_Figure_1.pdf", bbox_inches="tight", facecolor="white")
+    save_figure(fig, "Supplementary_Figure_1")
     plt.close(fig)
 
 
@@ -317,6 +349,10 @@ def write_workbook() -> None:
     from openpyxl import load_workbook
 
     wb = load_workbook(workbook)
+    wb.properties.creator = "Zheng H"
+    wb.properties.lastModifiedBy = "Zheng H"
+    wb.properties.created = FIXED_WORKBOOK_DATETIME
+    wb.properties.modified = FIXED_WORKBOOK_DATETIME
     fill = PatternFill("solid", fgColor="1F4E78")
     font = Font(color="FFFFFF", bold=True)
     for ws in wb.worksheets:
@@ -335,6 +371,7 @@ def write_workbook() -> None:
                 cell.alignment = Alignment(wrap_text=True, vertical="top")
             ws.column_dimensions[col].width = width
     wb.save(workbook)
+    normalize_xlsx_zip(workbook)
     table_1().to_csv(TAB / "Table_1_cohort_characteristics.csv", index=False)
     table_2().to_csv(TAB / "Table_2_selected_composite_effects.csv", index=False)
 

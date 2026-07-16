@@ -23,6 +23,11 @@
   ],
   "related_identifiers": [
     {
+      "identifier": "10.5281/zenodo.21388009",
+      "relation": "isIdenticalTo",
+      "scheme": "doi"
+    },
+    {
       "identifier": "https://github.com/Zhenghongwei11/chb-gut-fermentation",
       "relation": "isSupplementTo",
       "scheme": "url"

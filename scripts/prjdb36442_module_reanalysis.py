@@ -96,8 +96,9 @@ def bootstrap_ci(xs: list[float], ys: list[float], seed: int, n_boot: int) -> tu
 def read_modules(path: Path, membership: str) -> dict[str, set[str]]:
     rows = read_tsv(path)
     modules: dict[str, set[str]] = defaultdict(set)
+    accepted_status = {"finalised", "draft_seed_not_final", "locked", "draft_seed_not_final_locked"}
     for row in rows:
-        if row.get("lock_status") not in {"draft_seed_not_final_locked", "locked"}:
+        if row.get("lock_status") not in accepted_status:
             continue
         if row.get("membership") != membership:
             continue
@@ -151,7 +152,7 @@ def read_pathway_abundance(path: Path) -> tuple[list[str], dict[str, dict[str, f
 
 def resolve_module_features(module_features: set[str], available_features: set[str]) -> list[str]:
     by_id: dict[str, str] = {}
-    for feature in available_features:
+    for feature in sorted(available_features):
         pathway_id = feature.split(": ", 1)[0]
         by_id[pathway_id] = feature
     resolved: list[str] = []
@@ -292,7 +293,7 @@ def pathway_metrics(runs: list[str], rel: dict[str, dict[str, float]]) -> dict[s
 
 
 def quantile_bins(metrics: dict[str, dict[str, float]], key: str, n_bins: int) -> dict[str, int]:
-    ordered = sorted(metrics, key=lambda f: metrics[f][key])
+    ordered = sorted(metrics, key=lambda f: (metrics[f][key], f))
     bins: dict[str, int] = {}
     if not ordered:
         return bins
@@ -310,8 +311,9 @@ def random_module_rows(
     n_random: int,
     seed: int,
 ) -> list[dict[str, str]]:
-    target = set(resolve_module_features(modules.get("overall_fermentation", set()), set(rel)))
-    if not target:
+    target_features = resolve_module_features(modules.get("overall_fermentation", set()), set(rel))
+    target = set(target_features)
+    if not target_features:
         return []
     metrics = pathway_metrics(runs, rel)
     mean_bins = quantile_bins(metrics, "mean", 5)
@@ -320,21 +322,21 @@ def random_module_rows(
     zero_bins = quantile_bins(metrics, "zero_fraction", 5)
     by_bin: dict[tuple[int, int, int, int], list[str]] = defaultdict(list)
     by_mean_prev: dict[tuple[int, int], list[str]] = defaultdict(list)
-    for feature in metrics:
+    for feature in sorted(metrics):
         if feature in target:
             continue
         by_bin[(mean_bins[feature], prev_bins[feature], var_bins[feature], zero_bins[feature])].append(feature)
         by_mean_prev[(mean_bins[feature], prev_bins[feature])].append(feature)
 
     rng = random.Random(seed)
-    target_bins = [(mean_bins[f], prev_bins[f], var_bins[f], zero_bins[f]) for f in target]
+    target_bins = [(mean_bins[f], prev_bins[f], var_bins[f], zero_bins[f]) for f in target_features]
     full_values = score_one_module(set(target), runs, rel, pseudocount)
     full_m = [full_values[r] for r in runs if groups[r] == "M"]
     full_s = [full_values[r] for r in runs if groups[r] == "S"]
     full_delta = mean(full_s) - mean(full_m)
     rows: list[dict[str, str]] = []
 
-    all_pool = [f for f in metrics if f not in target]
+    all_pool = [f for f in sorted(metrics) if f not in target]
     for i in range(1, n_random + 1):
         chosen: list[str] = []
         used: set[str] = set()

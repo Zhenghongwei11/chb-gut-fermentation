@@ -65,7 +65,7 @@ def load_modules(path: Path, membership: str) -> dict[str, list[dict[str, str]]]
     definitions = pd.read_csv(path, sep="\t")
     definitions = definitions[
         (definitions["membership"] == membership)
-        & (definitions["lock_status"].isin(["locked", "draft_seed_not_final_locked"]))
+        & (definitions["lock_status"].isin(["finalised", "draft_seed_not_final", "locked", "draft_seed_not_final_locked"]))
     ].copy()
     modules: dict[str, list[dict[str, str]]] = {
         module: df.to_dict(orient="records")
