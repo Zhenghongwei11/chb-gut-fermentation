@@ -1,0 +1,2 @@
+module	true_delta_mean_logratio_S_minus_M	n_random_modules	random_delta_min	random_delta_q025	random_delta_q25	random_delta_median	random_delta_q75	random_delta_q975	random_delta_max	random_abs_delta_q95	exact_bin_match_fraction	relaxed_mean_prevalence_match_fraction	global_fallback_fraction
+overall_fermentation	-0.304917605014	5000	0.185356663621	0.242178850483	0.309307519506	0.348873720677	0.392292506642	0.488413580097	0.548310449142	0.464658316394	1	0	0

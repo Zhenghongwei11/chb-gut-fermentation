@@ -1,0 +1,15 @@
+membership	module	n_pathways_present	n_expected_decrease	n_decreased_S_minus_M	fraction_expected_decrease_met	module_interpretation
+conservative	bile_acids	1	0	0		direction_consistency_summary
+conservative	lps_lipidA	3	0	0		direction_consistency_summary
+conservative	overall_fermentation	6	6	4	0.6666666666666666	direction_consistency_summary
+conservative	scfa_acetate	2	2	2	1.0	direction_consistency_summary
+conservative	scfa_butyrate	4	4	2	0.5	direction_consistency_summary
+conservative	scfa_lactate_succinate	2	2	2	1.0	direction_consistency_summary
+conservative	tryptophan_indole	2	0	0		direction_consistency_summary
+expanded	bile_acids	1	0	0		direction_consistency_summary
+expanded	lps_lipidA	4	0	0		direction_consistency_summary
+expanded	overall_fermentation	8	8	4	0.5	direction_consistency_summary
+expanded	scfa_acetate	4	4	2	0.5	direction_consistency_summary
+expanded	scfa_butyrate	4	4	2	0.5	direction_consistency_summary
+expanded	scfa_lactate_succinate	4	4	2	0.5	direction_consistency_summary
+expanded	tryptophan_indole	2	0	0		direction_consistency_summary

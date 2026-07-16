@@ -1,0 +1,7 @@
+membership	module	dropped_pathway_id	n_pathways_remaining	full_delta_S_minus_M	loo_delta_S_minus_M	loo_exact_p	direction_consistent_with_full
+conservative	overall_fermentation	P41-PWY	5	-0.38710259109831213	-0.3264356281820424	0.038461538461538464	True
+conservative	overall_fermentation	PWY-5100	5	-0.38710259109831213	-0.3381032355009639	0.02759585615622767	True
+conservative	overall_fermentation	CENTFERM-PWY	5	-0.38710259109831213	-0.3958635281003664	0.006912360085734699	True
+conservative	overall_fermentation	PWY-5676	5	-0.38710259109831213	-0.44215480235265314	0.007489878542510121	True
+conservative	overall_fermentation	PWY-5677	5	-0.38710259109831213	-0.3938975979512156	0.010520361990950227	True
+conservative	overall_fermentation	P163-PWY	5	-0.38710259109831213	-0.3865936748537111	0.011877828054298642	True

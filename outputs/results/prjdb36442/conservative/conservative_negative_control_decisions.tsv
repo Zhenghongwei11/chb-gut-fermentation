@@ -1,0 +1,4 @@
+module	negative_control_rationale	delta_mean_logratio_S_minus_M	p_exact	loo_fraction	same_direction_as_primary	equal_or_larger_abs_delta_than_primary	comparable_or_smaller_p_than_primary	comparable_or_stronger_loo_than_primary	compound_concern_flag	interpretation
+bile_acids	non-SCFA bile-acid transformation comparator	-1.12983709319	0.45	0.95	True	True	False	False	False	large_but_not_statistically_or_stability_comparable
+lps_lipidA	non-fermentation cell-envelope/endotoxin comparator	-0.81509454393	0.78810431055	0.8	True	True	False	False	False	large_but_not_statistically_or_stability_comparable
+tryptophan_indole	non-fermentation amino-acid comparator	-0.124499446244	0.174749940462	1	True	False	False	True	False	same_direction_weaker_than_primary

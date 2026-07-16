@@ -1,0 +1,9 @@
+cohort	membership	module	n_expected_decrease_present	n_decreased	fraction_decreased
+LoombaR_2017	conservative	overall_fermentation	5	3	0.6
+LoombaR_2017	conservative	scfa_acetate	1	1	1.0
+LoombaR_2017	conservative	scfa_butyrate	4	2	0.5
+LoombaR_2017	conservative	scfa_lactate_succinate	1	1	1.0
+LoombaR_2017	expanded	overall_fermentation	6	3	0.5
+LoombaR_2017	expanded	scfa_acetate	2	1	0.5
+LoombaR_2017	expanded	scfa_butyrate	4	2	0.5
+LoombaR_2017	expanded	scfa_lactate_succinate	2	1	0.5

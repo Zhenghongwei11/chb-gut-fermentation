@@ -1,0 +1,35 @@
+cohort	membership	module	contrast	dropped_pathway_id	n_pathways_remaining	delta_mean	same_direction_as_full
+QinN_2014	conservative	lps_lipidA	cirrhosis_minus_healthy	KDO-NAGLIPASYN-PWY	1	1.9835813274875047	True
+QinN_2014	conservative	lps_lipidA	cirrhosis_minus_healthy	LPSSYN-PWY	1	2.785852549804879	True
+QinN_2014	conservative	scfa_acetate	cirrhosis_minus_healthy	PWY-5100	0		
+QinN_2014	conservative	scfa_butyrate	cirrhosis_minus_healthy	CENTFERM-PWY	3	0.6264258757606118	True
+QinN_2014	conservative	scfa_butyrate	cirrhosis_minus_healthy	PWY-5676	3	-0.15931268502790363	False
+QinN_2014	conservative	scfa_butyrate	cirrhosis_minus_healthy	PWY-5677	3	0.21194180494734383	True
+QinN_2014	conservative	scfa_butyrate	cirrhosis_minus_healthy	P163-PWY	3	0.1916260756844208	True
+QinN_2014	conservative	scfa_lactate_succinate	cirrhosis_minus_healthy	PWY-5100	0		
+QinN_2014	conservative	tryptophan_indole	cirrhosis_minus_healthy	PWY-6629	1	-0.07235833277857306	False
+QinN_2014	conservative	tryptophan_indole	cirrhosis_minus_healthy	TRPSYN-PWY	1	2.2858943579714612	True
+QinN_2014	conservative	overall_fermentation	cirrhosis_minus_healthy	PWY-5100	4	0.21300141491351443	False
+QinN_2014	conservative	overall_fermentation	cirrhosis_minus_healthy	CENTFERM-PWY	4	-0.011037257261314437	True
+QinN_2014	conservative	overall_fermentation	cirrhosis_minus_healthy	PWY-5676	4	-0.09957904277479468	True
+QinN_2014	conservative	overall_fermentation	cirrhosis_minus_healthy	PWY-5677	4	-0.03057829848005955	True
+QinN_2014	conservative	overall_fermentation	cirrhosis_minus_healthy	P163-PWY	4	-0.034832991333591856	True
+QinN_2014	expanded	lps_lipidA	cirrhosis_minus_healthy	KDO-NAGLIPASYN-PWY	2	2.6424644862332443	True
+QinN_2014	expanded	lps_lipidA	cirrhosis_minus_healthy	LPSSYN-PWY	2	2.395339859710475	True
+QinN_2014	expanded	lps_lipidA	cirrhosis_minus_healthy	ECASYN-PWY	2	2.7561100415210156	True
+QinN_2014	expanded	scfa_acetate	cirrhosis_minus_healthy	PWY-5100	1	1.0655614420988941	True
+QinN_2014	expanded	scfa_acetate	cirrhosis_minus_healthy	P461-PWY	1	-0.09220242796091149	False
+QinN_2014	expanded	scfa_butyrate	cirrhosis_minus_healthy	CENTFERM-PWY	3	0.6264258757606118	True
+QinN_2014	expanded	scfa_butyrate	cirrhosis_minus_healthy	PWY-5676	3	-0.15931268502790363	False
+QinN_2014	expanded	scfa_butyrate	cirrhosis_minus_healthy	PWY-5677	3	0.21194180494734383	True
+QinN_2014	expanded	scfa_butyrate	cirrhosis_minus_healthy	P163-PWY	3	0.1916260756844208	True
+QinN_2014	expanded	scfa_lactate_succinate	cirrhosis_minus_healthy	PWY-5100	1	1.0655614420988941	True
+QinN_2014	expanded	scfa_lactate_succinate	cirrhosis_minus_healthy	P461-PWY	1	-0.09220242796091149	False
+QinN_2014	expanded	tryptophan_indole	cirrhosis_minus_healthy	PWY-6629	1	-0.07235833277857306	False
+QinN_2014	expanded	tryptophan_indole	cirrhosis_minus_healthy	TRPSYN-PWY	1	2.2858943579714612	True
+QinN_2014	expanded	overall_fermentation	cirrhosis_minus_healthy	PWY-5100	5	0.40611254603047353	True
+QinN_2014	expanded	overall_fermentation	cirrhosis_minus_healthy	P461-PWY	5	-0.029581095075310593	False
+QinN_2014	expanded	overall_fermentation	cirrhosis_minus_healthy	CENTFERM-PWY	5	0.09522689369770809	True
+QinN_2014	expanded	overall_fermentation	cirrhosis_minus_healthy	PWY-5676	5	0.03118156250990456	True
+QinN_2014	expanded	overall_fermentation	cirrhosis_minus_healthy	PWY-5677	5	0.07254268741060699	True
+QinN_2014	expanded	overall_fermentation	cirrhosis_minus_healthy	P163-PWY	5	0.06812820512429507	True

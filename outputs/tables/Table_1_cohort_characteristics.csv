@@ -1,0 +1,4 @@
+cohort,disease_setting,reference_group,test_group,phenotype_data,covariates_available
+CHB discovery,Treatment-naive CHB,M: Scheuer G0-1 and S0-1; n=9,S: G>1 and/or S>1; n=11,Binary biopsy-defined M/S group,"Sample-level G, S, ALT, AST, BMI, HBV DNA, sex, and medication exposure unavailable from public metadata used here"
+NAFLD fibrosis,Biopsy-proven NAFLD,F0-F2; n=72,F3-F4; n=14,Fibrosis stage available; age category fully collinear with fibrosis group,"Read count, read bases, platform, extraction kit; sex, BMI, diabetes unavailable"
+Cirrhosis context,Cirrhosis case-control cohort,Healthy controls; n=114,Cirrhosis; n=123,Disease status available; not a disease-internal histology contrast,Detailed patient-level cirrhosis severity covariates unavailable in this analysis
