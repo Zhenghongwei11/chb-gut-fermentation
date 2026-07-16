@@ -7,10 +7,10 @@ authors:
   - family-names: Bu
     given-names: Wanping
 date-released: 2026-07-16
-version: 1.0.4
+version: 1.0.5
 license: MIT
 repository-code: "https://github.com/Zhenghongwei11/chb-gut-fermentation"
 identifiers:
   - type: doi
-    value: 10.5281/zenodo.21394167
-    description: "Previous archived release"
+    value: 10.5281/zenodo.21395890
+    description: "Archived v1.0.5 release"

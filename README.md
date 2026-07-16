@@ -27,6 +27,8 @@ Version 1.0.3 refines figure-label spacing and synchronizes the final submission
 
 Version 1.0.4 removes in-figure explanatory text from the cohort contrast figure and keeps the explanation in the figure legend and manuscript text.
 
+Version 1.0.5 documents pathway-resource versions and multiplicity wording in the supplementary statistical-methods table: https://doi.org/10.5281/zenodo.21395890
+
 ## Reproduce the analysis
 
 Install Python dependencies:
