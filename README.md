@@ -25,6 +25,8 @@ Version 1.0.2 synchronizes the submission-facing figure layout and supplementary
 
 Version 1.0.3 refines figure-label spacing and synchronizes the final submission-facing figure outputs with the reproducibility scripts.
 
+Version 1.0.4 removes in-figure explanatory text from the cohort contrast figure and keeps the explanation in the figure legend and manuscript text.
+
 ## Reproduce the analysis
 
 Install Python dependencies:

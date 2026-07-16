@@ -7,7 +7,7 @@ authors:
   - family-names: Bu
     given-names: Wanping
 date-released: 2026-07-16
-version: 1.0.3
+version: 1.0.4
 license: MIT
 repository-code: "https://github.com/Zhenghongwei11/chb-gut-fermentation"
 identifiers:
